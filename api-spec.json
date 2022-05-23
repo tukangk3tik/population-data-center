@@ -1,0 +1,12 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Spring Starter Population Data Center RESTful API",
+    "version": "1",
+    "description": "OpenAPI for Population Data Center",
+    "termsOfService": "https://github.com/tukangk3tik/population-data-center"
+  },
+  "paths": {
+
+  }
+}
