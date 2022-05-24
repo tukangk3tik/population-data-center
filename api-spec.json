@@ -201,7 +201,7 @@
         "security": [{"Auth": [] }],
         "tags": ["Person"],
         "summary": "Delete existing person",
-        "description": "Delete existing todolist in DB",
+        "description": "Delete existing person in DB",
         "responses": {
           "200": {
             "description": "Success delete data",
@@ -246,7 +246,7 @@
         },
         "parameters": [
           {
-            "$ref": "#/components/parameters/TodoListId"
+            "$ref": "#/components/parameters/PersonIdNumber"
           }
         ]
       }
