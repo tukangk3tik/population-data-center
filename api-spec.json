@@ -1,12 +1,362 @@
 {
-  "openapi": "3.0.3",
+  "openapi" : "3.0.3",
   "info": {
-    "title": "Spring Starter Population Data Center RESTful API",
+    "title": "Population Data Center RESTful API",
     "version": "1",
     "description": "OpenAPI for Population Data Center",
-    "termsOfService": "https://github.com/tukangk3tik/population-data-center"
+    "termsOfService": "https://github.com/tukangk3tik/population-data-center",
+    "contact": {
+      "name": "Felix Serang",
+      "email": "yanfreddrick@gmail.com"
+    }
   },
   "paths": {
-
+    "/login" : {
+      "description": "Login",
+      "post": {
+        "tags": ["Login"],
+        "description": "Login user",
+        "responses": {
+          "200": {
+            "description": "Success login",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/person": {
+      "get": {
+        "tags": ["Person"],
+        "summary": "Get all person",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ArrayListPerson"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Get persons data"
+          }
+        }
+      },
+      "post": {
+        "security": [ { "Auth": [] } ],
+        "tags": ["Person"],
+        "summary": "Create new person",
+        "responses": {
+          "201": {
+            "description": "Success create data",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultResponse"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success create person",
+                    "value": {
+                      "status": "success",
+                      "message": "",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultResponse"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Fail update person",
+                    "value": {
+                      "status": "fail",
+                      "message": "Unauthorized",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/person/{personIdNumber}": {
+      "put": {
+        "security": [ { "Auth": [] } ],
+        "tags": ["Person"],
+        "summary": "Update existing person",
+        "responses": {
+          "201": {
+            "description": "Success update data",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultResponse"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success update person",
+                    "value": {
+                      "status": "success",
+                      "message": "",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultResponse"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Fail update person",
+                    "value": {
+                      "status": "fail",
+                      "message": "Unauthorized",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PersonIdNumber"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          }
+        }
+      },
+      "delete" :  {
+        "security": [{"Auth": [] }],
+        "tags": ["Person"],
+        "summary": "Delete existing person",
+        "description": "Delete existing todolist in DB",
+        "responses": {
+          "200": {
+            "description": "Success delete data",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultResponse"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success delete person",
+                    "value": {
+                      "status": "success",
+                      "message": "",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultResponse"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Fail update person",
+                    "value": {
+                      "status": "fail",
+                      "message": "Unauthorized",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TodoListId"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Auth": {
+        "description": "JWT Authorization header for Population data transaction",
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "PersonIdNumber": {
+        "name": "personIdNumber",
+        "description": "Person Id for update",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 16
+        },
+        "examples": {
+          "budi": {
+            "description": "Sample id for person name budi",
+            "value": "1207562203930002"
+          },
+          "ani": {
+            "description": "Sample id for person name ani",
+            "value": "1207562203930004"
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "id_number": {
+            "type": "string"
+          },
+          "full_name": {
+            "type": "string"
+          },
+          "place_of_birth": {
+            "type": "string"
+          },
+          "date_of_birth": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "number"
+          },
+          "blood_group": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "religion": {
+            "type": "string"
+          },
+          "marital_status": {
+            "type": "string"
+          },
+          "profession": {
+            "type": "string"
+          },
+          "citizenship": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          }
+        }
+      },
+      "ArrayListPerson": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Person"
+        }
+      },
+      "DefaultResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array"
+          }
+        }
+      }
+    }
   }
 }
