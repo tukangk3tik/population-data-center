@@ -1,21 +1,22 @@
 version: '3.5'
 
 services:
-  spring-starter:
-    container_name: spring-starter
-    image: spring-starter:0.0.1
-    ports:
-      - "8080:8080"
-    environment:
-      DATABASE_USERNAME: kotlin
-      DATABASE_PASSWORD: kotlin
-      DATABASE_URL: jdbc:postgresql://spring-starter-api-postgres:5432/restful-api
-  spring-starter-postgres:
-    container_name: "spring-starter-api-postgres"
-    image: postgres:12-apline
+  person-db-postgres:
+    container_name: "person-db-api-postgres"
+    image: postgres:12
     ports:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: kotlin
       POSTGRES_USER: kotlin
       POSTGRES_DB: person-db
+
+  #spring-starter:
+  #  container_name: spring-starter
+  #  image: spring-starter:0.0.1
+  #  ports:
+  #    - "8080:8080"
+  #  environment:
+  #    DATABASE_USERNAME: kotlin
+  #    DATABASE_PASSWORD: kotlin
+  #    DATABASE_URL: jdbc:postgresql://spring-starter-api-postgres:5432/restful-api
