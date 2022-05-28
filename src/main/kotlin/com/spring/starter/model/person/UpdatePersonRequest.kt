@@ -1,5 +1,6 @@
 package com.spring.starter.model.person
 
+import java.time.LocalDate
 import java.util.*
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
@@ -14,12 +15,12 @@ data class UpdatePersonRequest(
     val placeOfBirth: String?,
 
     @field:NotBlank
-    val dateOfBirth: Date?,
+    val dateOfBirth: LocalDate?,
 
     @field:NotNull
     @field:Min(value = 0)
     @field:Max(value = 1)
-    val gender: Int?,
+    val gender: Short?,
 
     @field:NotBlank
     val bloodGroup: String,

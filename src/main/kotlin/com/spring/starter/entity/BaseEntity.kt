@@ -7,10 +7,9 @@ import javax.persistence.*
 
 @MappedSuperclass
 abstract class BaseEntity{
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int? = null
+    open var id: Int? = null
 
     @Version
     var version: Long? = null

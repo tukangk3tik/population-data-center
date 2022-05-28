@@ -1,0 +1,9 @@
+### LIST products with size and page parameter
+
+GET http://localhost:8080/api/v1/person?size=5&page=0
+Accept: application/json
+
+### GET products by id
+
+GET http://localhost:8080/api/v1/person/1207232810950003
+Accept: application/json

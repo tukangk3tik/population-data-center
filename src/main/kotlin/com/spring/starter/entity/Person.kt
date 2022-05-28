@@ -2,16 +2,18 @@ package com.spring.starter.entity
 
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.Where
-import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Table
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import java.time.LocalDate
+import java.time.LocalDateTime
+import javax.persistence.*
 
 @Entity
 @Table(name = "persons")
-@SQLDelete(sql = "UPDATE persons SET deleted_at = ? WHERE id = ?")
-@Where(clause = "deleted_at")
+@SQLDelete(sql = "UPDATE persons SET deleted_at = ? WHERE id_number = ?")
+//@Where(clause = "deleted_at = NULL")
 data class Person(
+    @Id
     @Column(name = "id_number")
     var idNumber: String,
 
@@ -22,10 +24,10 @@ data class Person(
     var placeOfBirth: String,
 
     @Column(name = "date_of_birth")
-    var dateOfBirth: Date,
+    var dateOfBirth: LocalDate,
 
     @Column(name = "gender")
-    var gender: Int,
+    var gender: Short,
 
     @Column(name = "blood_group")
     var bloodGroup: String,
@@ -46,5 +48,19 @@ data class Person(
     var citizenship: String,
 
     @Column(name = "phone_number")
-    var phoneNumber: String
-): BaseEntity()
+    var phoneNumber: String,
+
+    @Version
+    var version: Long? = null,
+
+    @CreatedDate
+    @Column(name = "created_at")
+    var createdAt: LocalDateTime? = null,
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    var updatedAt: LocalDateTime? = null,
+
+    @Column(name = "deleted_at")
+    var deletedAt: LocalDateTime? = null
+)

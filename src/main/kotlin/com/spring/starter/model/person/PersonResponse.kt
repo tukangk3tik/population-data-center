@@ -1,13 +1,13 @@
 package com.spring.starter.model.person
 
-import java.util.*
+import java.time.LocalDate
 
 data class PersonResponse(
     val idNumber: String,
     val fullName: String,
     val placeOfBirth: String,
-    val dateOfBirth: Date,
-    val gender: Int,
+    val dateOfBirth: LocalDate,
+    val gender: Short,
     val bloodGroup: String,
     val address: String,
     val religion: String,

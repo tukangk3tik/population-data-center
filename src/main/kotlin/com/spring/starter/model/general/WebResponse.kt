@@ -5,7 +5,7 @@ package com.spring.starter.model.general
  */
 
 data class WebResponse<T>(
-    val status: String,
+    val status: String = "success",
     val message: String,
     val data: T
 )
