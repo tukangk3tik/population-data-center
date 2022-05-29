@@ -1,8 +1,9 @@
 package com.spring.starter.service.impl
 
 import com.spring.starter.entity.Person
+import com.spring.starter.error.AlreadyExitsException
 import com.spring.starter.error.NotFoundException
-import com.spring.starter.model.general.PaginationRequest
+import com.spring.starter.model.general.pagination.PaginationRequest
 import com.spring.starter.model.person.CreatePersonRequest
 import com.spring.starter.model.person.PersonResponse
 import com.spring.starter.model.person.UpdatePersonRequest
@@ -12,6 +13,7 @@ import com.spring.starter.validation.ValidationUtils
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 import java.util.stream.Collectors
 
 @Service
@@ -22,12 +24,14 @@ class PersonServiceImpl(
 
     override fun create(createRequest: CreatePersonRequest): PersonResponse {
         validationUtils.validate(createRequest)
+        val isExist = personRepository.findByIdOrNull(createRequest.idNumber)
+        if (isExist != null) throw AlreadyExitsException()
 
         val person = Person(
             idNumber = createRequest.idNumber!!,
             fullName = createRequest.fullName!!,
             placeOfBirth = createRequest.placeOfBirth!!,
-            dateOfBirth = createRequest.dateOfBirth!!,
+            dateOfBirth = LocalDate.parse(createRequest.dateOfBirth!!),
             gender = createRequest.gender!!,
             bloodGroup = createRequest.bloodGroup,
             address = createRequest.address,
@@ -54,7 +58,7 @@ class PersonServiceImpl(
         person.apply {
             fullName = updateRequest.fullName!!
             placeOfBirth = updateRequest.placeOfBirth!!
-            dateOfBirth = updateRequest.dateOfBirth!!
+            dateOfBirth = LocalDate.parse(updateRequest.dateOfBirth!!)
             gender = updateRequest.gender!!
             bloodGroup = updateRequest.bloodGroup
             address = updateRequest.address

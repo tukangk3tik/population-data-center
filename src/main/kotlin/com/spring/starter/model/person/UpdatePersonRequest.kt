@@ -1,7 +1,5 @@
 package com.spring.starter.model.person
 
-import java.time.LocalDate
-import java.util.*
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
@@ -15,7 +13,7 @@ data class UpdatePersonRequest(
     val placeOfBirth: String?,
 
     @field:NotBlank
-    val dateOfBirth: LocalDate?,
+    val dateOfBirth: String?,
 
     @field:NotNull
     @field:Min(value = 0)

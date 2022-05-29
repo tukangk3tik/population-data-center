@@ -1,6 +1,6 @@
 package com.spring.starter.service
 
-import com.spring.starter.model.general.PaginationRequest
+import com.spring.starter.model.general.pagination.PaginationRequest
 import com.spring.starter.model.person.CreatePersonRequest
 import com.spring.starter.model.person.PersonResponse
 import com.spring.starter.model.person.UpdatePersonRequest

@@ -1,5 +1,6 @@
 package com.spring.starter.controller
 
+import com.spring.starter.error.AlreadyExitsException
 import com.spring.starter.error.NotFoundException
 import com.spring.starter.error.UnauthorizedException
 import com.spring.starter.model.general.WebResponse
@@ -34,6 +35,15 @@ class ErrorController {
             status = "fail",
             message = "UNAUTHORIZED",
             data = "Please put your token"
+        )
+    }
+
+    @ExceptionHandler(value = [AlreadyExitsException::class])
+    fun alreadyExistsException(alreadyExitsException: AlreadyExitsException): WebResponse<String> {
+        return WebResponse(
+            status = "fail",
+            message = "NOT AVAILABLE",
+            data = "Insert fail. Data is already exists"
         )
     }
 }
