@@ -1,13 +1,15 @@
+CREATE SEQUENCE user_id_seq;
 CREATE TABLE IF NOT EXISTS users (
-    id int NOT NULL,
+    id int NOT NULL DEFAULT nextval('user_id_seq'),
     email varchar(50),
     password varchar(100),
     version bigint,
     created_at timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id, email)
 );
+ALTER SEQUENCE user_id_seq OWNED BY users.id;
 
 CREATE TABLE IF NOT EXISTS persons (
     id_number varchar(20) NOT NULL,
@@ -47,4 +49,23 @@ INSERT INTO persons VALUES (
     NOW(),
     null,
     null
+);
+
+-- INITIAL USER
+-- password is admin
+INSERT INTO users (
+    email,
+    password,
+    version,
+    created_at,
+    updated_at,
+    deleted_at
 )
+VALUES (
+    'admin@mail.com',
+    '$2a$12$he3OTVxrqs2t73SLA6oW8uyInlYw2K1HyI/YaAS37JuSiwndNsCQa',
+    0,
+    NOW(),
+    null,
+    null
+);

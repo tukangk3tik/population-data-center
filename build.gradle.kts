@@ -11,8 +11,8 @@ plugins {
 
 flyway {
 	url = "jdbc:postgresql://localhost/person-db"
-	user = "kotlin"
-	password = "kotlin"
+	user = "postgres"
+	password = "deoGratias"
 }
 
 group = "com.spring"
@@ -32,9 +32,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("com.ninja-squad:springmockk:3.1.1")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
 
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.security:spring-security-test")
 }
 
 tasks.withType<KotlinCompile> {

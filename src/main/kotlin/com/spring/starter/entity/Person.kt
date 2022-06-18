@@ -11,7 +11,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "persons")
 @SQLDelete(sql = "UPDATE persons SET deleted_at = ? WHERE id_number = ?")
-//@Where(clause = "deleted_at = NULL")
+@Where(clause = "deleted_at IS NULL")
 data class Person(
     @Id
     @Column(name = "id_number")
