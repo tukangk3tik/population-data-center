@@ -1,8 +1,6 @@
 package com.spring.starter.controller
 
-import com.spring.starter.error.AlreadyExitsException
-import com.spring.starter.error.NotFoundException
-import com.spring.starter.error.UnauthorizedException
+import com.spring.starter.error.*
 import com.spring.starter.model.general.WebResponse
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -44,6 +42,33 @@ class ErrorController {
             status = "fail",
             message = "NOT AVAILABLE",
             data = "Insert fail. Data is already exists"
+        )
+    }
+
+    @ExceptionHandler(value = [UserNotFoundException::class])
+    fun userNotFoundException(userNotFoundException: UserNotFoundException): WebResponse<String> {
+        return WebResponse(
+            status = "fail",
+            message = "LOGIN FAIL",
+            data = "User not found"
+        )
+    }
+
+    @ExceptionHandler(value = [LoginFailException::class])
+    fun loginFailException(loginFailException: LoginFailException): WebResponse<String> {
+        return WebResponse(
+            status = "fail",
+            message = "LOGIN FAIL",
+            data = "Email or password are invalid"
+        )
+    }
+
+    @ExceptionHandler(value = [TokenInvalidException::class])
+    fun tokenInvalidException(tokenInvalidException: TokenInvalidException): WebResponse<String> {
+        return WebResponse(
+            status = "fail",
+            message = "TOKEN ERROR",
+            data = "Token is invalid or expired"
         )
     }
 }
