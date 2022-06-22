@@ -1,15 +1,12 @@
 package com.spring.starter.service
 
-import com.spring.starter.entity.Person
 import com.spring.starter.error.NotFoundException
-import com.spring.starter.model.person.CreatePersonRequest
 import com.spring.starter.repository.PersonRepository
 import com.spring.starter.service.impl.PersonServiceImpl
 import com.spring.starter.utils.person
 import com.spring.starter.utils.personInsertSample
 import com.spring.starter.utils.personUpdateSample
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -18,10 +15,10 @@ import org.junit.jupiter.api.extension.Extensions
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
-import java.time.LocalDate
-import java.time.LocalDateTime
+import org.springframework.boot.test.context.SpringBootTest
 import java.util.*
 
+@SpringBootTest
 @Extensions(value = [ExtendWith(MockitoExtension::class)])
 class PersonServiceTest {
     @Mock
