@@ -10,7 +10,6 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "persons")
-@SQLDelete(sql = "UPDATE persons SET deleted_at = ? WHERE id_number = ?")
 @Where(clause = "deleted_at IS NULL")
 data class Person(
     @Id
@@ -63,4 +62,15 @@ data class Person(
 
     @Column(name = "deleted_at")
     var deletedAt: LocalDateTime? = null
-)
+) {
+    @PrePersist
+    fun createTimeStamp() {
+        createdAt = LocalDateTime.now()
+    }
+
+    @PreUpdate
+    fun updateTimeStamp() {
+         updatedAt = LocalDateTime.now()
+    }
+
+}

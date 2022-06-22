@@ -46,7 +46,7 @@ INSERT INTO persons VALUES (
     'WNI',
     '+6282235465728',
     0,
-    NOW(),
+    '2022-06-01 10:00:00',
     null,
     null
 );
@@ -65,7 +65,7 @@ VALUES (
     'admin@mail.com',
     '$2a$12$he3OTVxrqs2t73SLA6oW8uyInlYw2K1HyI/YaAS37JuSiwndNsCQa',
     0,
-    NOW(),
+    '2022-06-01 10:00:00',
     null,
     null
 );
