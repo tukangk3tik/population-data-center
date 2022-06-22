@@ -1,5 +1,6 @@
 package com.spring.starter.service
 
+import com.spring.starter.entity.Person
 import com.spring.starter.model.general.pagination.PaginationRequest
 import com.spring.starter.model.person.CreatePersonRequest
 import com.spring.starter.model.person.PersonResponse
@@ -15,4 +16,6 @@ interface PersonService {
     fun delete(idNumber: String)
 
     fun list(listRequest: PaginationRequest): List<PersonResponse>
+
+    fun convertPersonToResponse(person: Person): PersonResponse
 }

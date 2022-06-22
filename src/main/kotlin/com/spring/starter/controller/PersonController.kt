@@ -6,17 +6,14 @@ import com.spring.starter.model.general.pagination.PaginationResultBuilder
 import com.spring.starter.model.general.pagination.PaginationMetadata
 import com.spring.starter.model.person.CreatePersonRequest
 import com.spring.starter.model.person.PersonResponse
+import com.spring.starter.model.person.UpdatePersonRequest
 import com.spring.starter.service.PersonService
 import com.spring.starter.utils.apiUrl
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import com.spring.starter.validation.ValidationUtils
+import org.springframework.web.bind.annotation.*
 
 @RestController
-class PersonController(val personService: PersonService) {
+class PersonController(val personService: PersonService, private val validationUtils: ValidationUtils) {
 
     @GetMapping(
         value = ["${apiUrl}/person"],
@@ -61,6 +58,7 @@ class PersonController(val personService: PersonService) {
         consumes = ["application/json"]
     )
     fun createPerson(@RequestBody body: CreatePersonRequest): WebResponse<PersonResponse> {
+        validationUtils.validate(body)
         val personResponse = personService.create(body)
         return WebResponse(
             status = "success",
@@ -69,4 +67,36 @@ class PersonController(val personService: PersonService) {
         )
     }
 
+    @PutMapping(
+        value = ["${apiUrl}/person/{id}"],
+        produces = ["application/json"],
+        consumes = ["application/json"]
+    )
+    fun updatePerson(
+        @PathVariable("id") id: String,
+        @RequestBody body: UpdatePersonRequest
+    ): WebResponse<PersonResponse> {
+        validationUtils.validate(body)
+        val personResponse = personService.update(id, body)
+        return WebResponse(
+            status = "success",
+            message = "OK",
+            data = personResponse
+        )
+    }
+
+    @DeleteMapping(
+        value = ["${apiUrl}/person/{id}"],
+        produces = ["application/json"]
+    )
+    fun deletePerson(
+        @PathVariable("id") id: String
+    ): WebResponse<Any> {
+        val response = personService.delete(id)
+        return WebResponse(
+            status = "success",
+            message = "OK",
+            data = response
+        )
+    }
 }

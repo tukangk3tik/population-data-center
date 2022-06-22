@@ -9,7 +9,6 @@ import com.spring.starter.model.person.PersonResponse
 import com.spring.starter.model.person.UpdatePersonRequest
 import com.spring.starter.repository.PersonRepository
 import com.spring.starter.service.PersonService
-import com.spring.starter.validation.ValidationUtils
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -17,13 +16,9 @@ import java.time.LocalDate
 import java.util.stream.Collectors
 
 @Service
-class PersonServiceImpl(
-    private val personRepository: PersonRepository,
-    private val validationUtils: ValidationUtils
-): PersonService {
+class PersonServiceImpl(private val personRepository: PersonRepository): PersonService {
 
     override fun create(createRequest: CreatePersonRequest): PersonResponse {
-        validationUtils.validate(createRequest)
         val isExist = personRepository.findByIdOrNull(createRequest.idNumber)
         if (isExist != null) throw AlreadyExitsException()
 
@@ -42,7 +37,7 @@ class PersonServiceImpl(
             phoneNumber = createRequest.phoneNumber
         )
 
-        personRepository.save(person)
+        personRepository.saveAndFlush(person)
         return convertPersonToResponse(person)
     }
 
@@ -53,7 +48,6 @@ class PersonServiceImpl(
 
     override fun update(idNumber: String, updateRequest: UpdatePersonRequest): PersonResponse {
         val person = findPersonByIdOrThrowNotFound(idNumber)
-        validationUtils.validate(updateRequest)
 
         person.apply {
             fullName = updateRequest.fullName!!
@@ -68,13 +62,13 @@ class PersonServiceImpl(
             citizenship = updateRequest.citizenship
             phoneNumber = updateRequest.phoneNumber
         }
-        personRepository.save(person)
+        personRepository.saveAndFlush(person)
         return convertPersonToResponse(person)
     }
 
     override fun delete(idNumber: String) {
         val person = findPersonByIdOrThrowNotFound(idNumber)
-        personRepository.delete(person)
+        personRepository.deleteById(idNumber)
     }
 
     override fun list(listRequest: PaginationRequest): List<PersonResponse> {
@@ -92,7 +86,7 @@ class PersonServiceImpl(
         }
     }
 
-    private fun convertPersonToResponse(person: Person): PersonResponse {
+    override fun convertPersonToResponse(person: Person): PersonResponse {
         return PersonResponse(
             idNumber = person.idNumber,
             fullName = person.fullName,
