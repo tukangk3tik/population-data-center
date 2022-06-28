@@ -1,15 +1,19 @@
-version: '3.5'
+version: '3.8'
 
 services:
   person-db-postgres:
-    container_name: "person-db-api-postgres"
-    image: postgres:12
+    container_name: "population-data-center-api-postgres"
+    image: postgres:14
+    restart: always
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: kotlin
-      POSTGRES_USER: kotlin
+      POSTGRES_PASSWORD: deoGratias
+      POSTGRES_USER: postgres
       POSTGRES_DB: person-db
+    volumes:
+      - ./data-postgres:/var/lib/postgresql/data # postgres data mounting point
+      - ./sql:/root/sql # sql for export/import
 
   #spring-starter:
   #  container_name: spring-starter

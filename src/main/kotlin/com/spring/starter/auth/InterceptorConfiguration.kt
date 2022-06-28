@@ -1,6 +1,5 @@
 package com.spring.starter.auth
 
-import com.spring.starter.utils.apiUrl
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -12,12 +11,7 @@ class InterceptorConfiguration(val jwtInterceptor: JwtInterceptor): WebMvcConfig
         super.addInterceptors(registry)
         registry
             .addWebRequestInterceptor(jwtInterceptor)
-            .excludePathPatterns(
-                "",
-                "/api",
-                apiUrl,
-                "${apiUrl}/auth/**"
-            )
+            .excludePathPatterns(jwtExcludePath)
     }
 
 }

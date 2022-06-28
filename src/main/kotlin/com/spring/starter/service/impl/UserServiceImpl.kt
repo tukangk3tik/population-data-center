@@ -2,19 +2,14 @@ package com.spring.starter.service.impl
 
 import com.spring.starter.auth.JwtProvider
 import com.spring.starter.error.LoginFailException
-import com.spring.starter.error.NotFoundException
 import com.spring.starter.error.UserNotFoundException
 import com.spring.starter.model.user.LoginRequest
 import com.spring.starter.model.user.LoginResponse
 import com.spring.starter.repository.UserRepository
 import com.spring.starter.service.UserService
-import com.spring.starter.utils.secretJwt
 import com.spring.starter.validation.ValidationUtils
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class UserServiceImpl(
